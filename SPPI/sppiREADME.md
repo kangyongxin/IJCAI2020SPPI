@@ -33,3 +33,24 @@
 
 \# python -m SPPI.miniMaze.run_demovs
 
+we get 3 heatmaps 
+
+## 2 Grid Maze
+
+### Q
+
+\# python -m SPPI.GridMaze.run_tests
+
+\# python -m SPPI.GridMaze.run_qlearning
+
+how to evaluate the results: total steps or rewards ?
+
+
+### SI-Q
+
+\# python -m SPPI.GridMaze.run_SIQ
+
+a new framework should be proposed here, ablation experiments
+
+analyze the hyper Paras(N,N0,max, r,gamma, beta) , illustrate by the experiments results
+

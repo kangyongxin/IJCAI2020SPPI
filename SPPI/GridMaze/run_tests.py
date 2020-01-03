@@ -1,5 +1,5 @@
-from baselines.SPPI.GridMaze.maze_env20 import Maze
-from baselines.SPPI.GridMaze.RL_brain import QLearningTable
+from SPPI.GridMaze.maze_env20 import Maze
+from SPPI.GridMaze.RL_brain import QLearningTable
 
 def main_MAZE(env):
     n_trj = 1000
