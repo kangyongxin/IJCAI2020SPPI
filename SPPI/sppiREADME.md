@@ -52,5 +52,7 @@ how to evaluate the results: total steps or rewards ?
 
 a new framework should be proposed here, ablation experiments
 
-analyze the hyper Paras(N,N0,max, r,gamma, beta) , illustrate by the experiments results
+analyze the hyper Paras(N,N0,max, r,gamma, beta) , illustrate by the experiments results  
+
+more env are needed
 
