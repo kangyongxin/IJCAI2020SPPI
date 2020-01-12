@@ -97,12 +97,29 @@ main2 基本模块及参考：
 
 参考deepmind 的pycolab
 tvt中包含的是一个三段式结构，第二段是纯干扰项
-尝试pycolab中的其它选项
+尝试pycolab中的其它选项 cite from https://github.com/deepmind/pycolab
+ python pycolab/examples/better_scrolly_maze.py 是个迷宫环境，有多处相似的迷宫结构，且不是静态环境
+
+在conda activate DeepmindResearch中运行示例：python pycolab/examples/scrolly_maze.py 
+
+使用时需要封装，参考tvt中的做法,在pycolab中用env.py进行包装，目标是得到，action_space,obs_space ,step, reward, render 等函数. tvt 代码中用active visual match 重新包装了一次，这里不进行包装。只是简单转化。
+没调试成功？？？
+s
+先用maze进行后续流程
 
 2.要有一个从记忆中获得内部奖励的简单模块：
 用它来完成基本的执行流程
+    def get_action_value(self, state):
+        '''
+        根据图中节点找到可执行的边的权重??????
+
 
 3.要有一个能够构建图结构的模块：
+
+sorb中是先构建状态对儿，再构建图
+直接用s,s_构造图
+
+
 
 4.图聚类和重构的模块:
 小图可以不聚类，只是简单重构即可
@@ -122,6 +139,7 @@ tvt中包含的是一个三段式结构，第二段是纯干扰项
 6. 图中的rollout 
 
 7. 根据rollout定义内部奖励值
+目前是根据奖励值定义的，接下来要根据值函数定义，或者用图进行传播
 
 8. 训练策略
 
