@@ -22,10 +22,14 @@ else:
     import tkinter as tk
 
 
+# UNIT = 40   # pixels
+# MAZE_H = 20 # grid height
+# MAZE_W = 20  # grid width
+# N_HELL = 120
 UNIT = 40   # pixels
-MAZE_H = 20 # grid height
-MAZE_W = 20  # grid width
-N_HELL = 120
+MAZE_H = 10 # grid height
+MAZE_W = 10  # grid width
+N_HELL = 12
 SLEEPtime = 0.0000011
 
 class Maze(tk.Tk, object):
@@ -182,7 +186,7 @@ class Maze(tk.Tk, object):
             # # s_ = s#'terminal'
             # # # done = False
             # # # s_=temp
-            # reward = 0#-0.01
+            # reward = -0.01
             # done = False
             # self.sit(action)
             # s_ = s

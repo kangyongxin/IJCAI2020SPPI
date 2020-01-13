@@ -21,27 +21,9 @@ import sys
 import curses
 
 
-from pycolab.examples.scrolly_maze import *
-from pycolab import ascii_art
-from pycolab import human_ui
-from pycolab.prefab_parts import drapes as prefab_drapes
-from pycolab.prefab_parts import sprites as prefab_sprites
-
 from maze.maze_env20 import Maze
 from GMRAgent import GMRAgent
-
-def humanplayer_scrolly(game):
-    print(game)
-    ui = human_ui.CursesUi(
-      keys_to_actions={curses.KEY_UP: 0, curses.KEY_DOWN: 1,
-                       curses.KEY_LEFT: 2, curses.KEY_RIGHT: 3,
-                       -1: 4,
-                       'q': 5, 'Q': 5},
-      delay=100, colour_fg=COLOUR_FG, colour_bg=COLOUR_BG)
-
-    # Let the game begin!
-    ui.play(game)
-
+import matplotlib.pyplot as plt
 
 
 def main(argv=()):
@@ -50,12 +32,15 @@ def main(argv=()):
     #humanplayer_scrolly(game)
     env=Maze()
     agent= GMRAgent(actions=list(range(env.n_actions)))
-    n_trj = 1000
+    n_trj = 10000
+    reward_list=[]
+    step_r=[]
     for eps in range(n_trj):
         observation = env.reset()
         step = 0
         re_vec = []
-        while step <1000:
+        r_episode =0
+        while step <2:
             step +=1
             env.render()
             #action = agent.random_action(str(observation))
@@ -64,16 +49,32 @@ def main(argv=()):
             observation_, reward, done = env.step(action)
             state_ = agent.obs2state(observation_)
             re_vec.append([state, action, reward, state_])
+            #agent.MemoryWriter(re_vec)
+            agent.PairWriter(state,action,reward,state_)
+            r_episode += reward
+            step_r.append(reward)
             observation = observation_
             if done:
                 print("done!")
                 break
         #print("re_vec",re_vec)
-        agent.MemoryWriter(re_vec)
-      
+        #agent.MemoryWriter(re_vec)
+        reward_list.append(r_episode)
+    
     agent.plotGmemory()
     print('state',state)
     agent.MemoryReader(state)
+    plt.plot(reward_list)
+    plt.show()
+
+    temp_step_r=[]
+    for i in range(len(step_r)):
+        if i<200 :
+            temp_step_r.append(step_r[i])
+        else:
+            temp_step_r.append(sum(step_r[(i-190):i])/190)
+    plt.plot(temp_step_r)
+    plt.show()
 
 if __name__ == '__main__':
   main(sys.argv)
