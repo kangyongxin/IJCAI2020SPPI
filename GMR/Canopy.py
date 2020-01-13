@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 # 随机生成一个500个二维 [0,1)平面点
 dataset = np.random.rand(500, 2)
-# print(dataset)
+print(dataset)
 
 # 设计一个Canopy类
 class Canopy:
@@ -26,6 +26,7 @@ class Canopy:
     
     # 使用欧式距离进行距离计算
     def euclideanDistance(self, vec1, vec2):
+        #print("vec1",vec1)
         return math.sqrt(((vec1 - vec2) ** 2).sum())
     
     # 根据当前dataset的长度随机选择一个下标
@@ -40,6 +41,7 @@ class Canopy:
         else:
             canopies = [] # 用于存放最终归类的结果
             while len(self.dataset) != 0:
+                print("len(self.dataset)",len(self.dataset))
                 # 获取一个随机下标
                 rand_index = self.getRandIndex() 
                 # 随机获取一个中心点，定为P点
@@ -54,6 +56,7 @@ class Canopy:
                     datum = self.dataset[datum_j]
                     # 计算选取的中心点P到每个点之间的距离
                     distance = self.euclideanDistance(current_center, datum)
+                    print(distance)
                     if distance < self.t1:
                         # 若距离小于t1，则将点归入P点的canopy类
                         current_center_list.append(datum)

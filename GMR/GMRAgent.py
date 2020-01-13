@@ -2,6 +2,7 @@
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
+from Canopy import Canopy as Cluster
 
 class GMRAgent:
     def __init__(self, actions,e_greedy=0.95,gamma=0.9,lr=0.01):
@@ -12,9 +13,15 @@ class GMRAgent:
         self.lr = lr
         self.node_vec=[]
         self.Gmemory=nx.DiGraph()
+        self.StateAttributesDict={}
+        
         
     def obs2state(self,observation):
         state=str(observation)
+        if observation == 'terminal':
+            self.StateAttributesDict[state]=list([165.0,165.0,195.0,195.0])
+        else:
+            self.StateAttributesDict[state]=observation #为了把值传到后面重构部分进行计算
         return state
 
     def random_action(self,state):
@@ -27,7 +34,8 @@ class GMRAgent:
         '''
 
         # G = 0 
-        for i in range(len(re_vec)-1,-1,-1):
+        for i in range(len(re_vec)):
+        #for i in range(len(re_vec)-1,-1,-1):
            
             self.PairWriter(re_vec[i][0],re_vec[i][1],re_vec[i][2],re_vec[i][3])
 
@@ -66,18 +74,18 @@ class GMRAgent:
                 if self.check_state_exist(state_):
                     pass
                 else:
-                    self.Gmemory.add_node(state_)
+                    self.Gmemory.add_node(state_,attributes=self.StateAttributesDict[state_])
             else:
                 if self.check_state_exist(state_):
-                    self.Gmemory.add_node(state)
+                    self.Gmemory.add_node(state,attributes=self.StateAttributesDict[state])
                 else:
-                    self.Gmemory.add_node(state)
-                    self.Gmemory.add_node(state_)
+                    self.Gmemory.add_node(state,attributes=self.StateAttributesDict[state])
+                    self.Gmemory.add_node(state_,attributes=self.StateAttributesDict[state_])
             self.Gmemory.add_edge(state,state_,weight=w,labels=action,visits=1)
 
     def plotGmemory(self):
         #print('节点向量的长度',len(self.node_vec))
-        # print("输出全部节点：{}".format(self.Gmemory.nodes()))
+        print("输出全部节点：{}".format(self.Gmemory.nodes()))
         # print("输出全部边：{}".format(self.Gmemory.edges()))
         print("输出全部边的数量：{}".format(self.Gmemory.number_of_edges()))
         nx.draw(self.Gmemory)
@@ -107,8 +115,15 @@ class GMRAgent:
     def get_action_value(self, state):
         '''
         根据图中节点找到可执行的边的权重??????
+        同时还要加入未执行的边，零权重
         '''
         [action_candidates,value_list,next_state_candidates]=self.MemoryReader(state)
+        for i in range(len(self.actions)):
+            if self.actions[i] in action_candidates:
+                pass
+            else:
+                action_candidates.append(self.actions[i])
+                value_list.append(0)
         return action_candidates,value_list
 
     def ActAccordingToGM(self, state):
@@ -117,20 +132,20 @@ class GMRAgent:
         进行推演
         返回各个可能动作对应的值函数
         '''
+        #print("actions",self.actions)
         if self.check_state_exist(state):
             #之前存在（相似状态），找到相应的值，按照贪心策略执行 
             if np.random.uniform() < self.epsilon:
                 action_candidates,action_values= self.get_action_value(state)
                 # some actions may have the same value, randomly choose on in these actions
-                if len(action_candidates)==0:
-                    action = np.random.choice(self.actions)
-                else:
-                    max_SA=np.max(action_values)
-                    actions=[]
-                    for i in range(len(action_values)):
-                        if action_values[i]==max_SA:
-                            actions.append(action_candidates[i])#这里宜直接使用动作的索引，而不是用i
-                    action = np.random.choice(actions)
+                max_SA=np.max(action_values)
+                acts=[]
+                for i in range(len(action_values)):
+                    if action_values[i]==max_SA:
+                        acts.append(action_candidates[i])#这里宜直接使用动作的索引，而不是用i
+                #print("candidates acts",acts)
+                #print("action_values",action_values)
+                action = np.random.choice(acts)
             else:
                 # choose random action
                 action = np.random.choice(self.actions)
@@ -139,3 +154,14 @@ class GMRAgent:
             action = np.random.choice(self.actions)
         return action
     
+    def MemoryReconstruction(self,t1,t2):
+        dataset=[]
+        for node in list(self.Gmemory.nodes()):
+            dataset.append(self.Gmemory.nodes[node]['attributes'])
+        print("dataset",dataset)
+        gc = Cluster(dataset)
+        gc.setThreshold(t1,t2)
+        canopies = gc.clustering()
+        print('Get %s initial centers.' % len(canopies))
+        for i in range(len(canopies)):
+            print(canopies[i])
