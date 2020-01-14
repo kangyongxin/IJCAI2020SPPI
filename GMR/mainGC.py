@@ -21,7 +21,10 @@ import sys
 import curses
 
 
-from maze.maze_env5 import Maze
+#from maze.maze_env5 import Maze
+from maze.maze_env20 import Maze
+#from maze.maze3_env20 import Maze
+
 from GMRAgent import GMRAgent
 import matplotlib.pyplot as plt
 
@@ -32,7 +35,7 @@ def main(argv=()):
     #humanplayer_scrolly(game)
     env=Maze()
     agent= GMRAgent(actions=list(range(env.n_actions)))
-    n_trj = 100
+    n_trj = 2000
     reward_list=[]
     step_r=[]
     for eps in range(n_trj):
@@ -40,7 +43,7 @@ def main(argv=()):
         step = 0
         re_vec = []
         r_episode =0
-        while step <20:
+        while step <50:
             step +=1
             env.render()
             #action = agent.random_action(str(observation))
@@ -60,13 +63,25 @@ def main(argv=()):
         #print("re_vec",re_vec)
         #agent.MemoryWriter(re_vec)
         reward_list.append(r_episode)
-        
-    
+        t1=150
+        t2=100
+        agent.MemoryReconstruction(t1,t2)
 
     agent.plotGmemory()
-    t1=216
-    t2=100
-    agent.MemoryReconstruction(t1,t2)
+    plt.plot(reward_list)
+    plt.show()
+
+    temp_step_r=[]
+    for i in range(len(step_r)):
+        if i<200 :
+            temp_step_r.append(step_r[i])
+        else:
+            temp_step_r.append(sum(step_r[(i-190):i])/190)
+    plt.plot(temp_step_r)
+    plt.show()
+    
+
+    
     # print('state',state)
     # agent.MemoryReader(state)
     # plt.plot(reward_list)

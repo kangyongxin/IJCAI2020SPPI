@@ -21,8 +21,9 @@ import sys
 import curses
 
 
-from maze.maze_env20 import Maze
+#from maze.maze_env20 import Maze
 # from maze.maze_env5 import Maze
+from maze.maze3_env5 import Maze
 from GMRAgent import GMRAgent
 import matplotlib.pyplot as plt
 
@@ -33,7 +34,7 @@ def main(argv=()):
     #humanplayer_scrolly(game)
     env=Maze()
     agent= GMRAgent(actions=list(range(env.n_actions)))
-    n_trj = 5000
+    n_trj = 2000
     reward_list=[]
     step_r=[]
     for eps in range(n_trj):
@@ -41,7 +42,7 @@ def main(argv=()):
         step = 0
         re_vec = []
         r_episode =0
-        while step <40:
+        while step <50:
             step +=1
             env.render()
             #action = agent.random_action(str(observation))

@@ -4,14 +4,15 @@
 用作对比实验
 '''
 
-from maze.maze_env20 import Maze
+#from maze.maze_env20 import Maze
 # from maze.maze_env5 import Maze
+from maze.maze3_env5 import Maze
 from RL_brain_QLearning import QLearningTable
 import matplotlib.pyplot as plt
 
 
 def main_MAZE(env):
-    n_trj = 5000
+    n_trj = 2000
     RL = QLearningTable(actions=list(range(env.n_actions)))
     reward_list=[]
     step_r=[]
@@ -19,7 +20,7 @@ def main_MAZE(env):
         observation = env.reset()
         step = 0
         r_episode=0
-        while step<40:
+        while step<50:
             step +=1
             env.render()
             #action = RL.random_action(str(observation))

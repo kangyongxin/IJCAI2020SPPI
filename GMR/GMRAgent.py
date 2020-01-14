@@ -17,10 +17,12 @@ class GMRAgent:
         
         
     def obs2state(self,observation):
-        state=str(observation)
+        
         if observation == 'terminal':
+            state= str(list([165.0,165.0,195.0,195.0]))
             self.StateAttributesDict[state]=list([165.0,165.0,195.0,195.0])
         else:
+            state=str(observation)
             self.StateAttributesDict[state]=observation #为了把值传到后面重构部分进行计算
         return state
 
@@ -57,7 +59,7 @@ class GMRAgent:
             tar = w
         delta_w = tar - old_w
         new_w = old_w + self.lr*delta_w
-        self.Gmemory.add_edge(state,state_,weight=new_w,labels=action,visits=old_visits+1)
+        self.Gmemory.add_edge(state,state_,weight=new_w,labels=action,reward=w,visits=old_visits+1)
 
     def PairWriter(self, state, action, w, state_):
         '''
@@ -81,7 +83,7 @@ class GMRAgent:
                 else:
                     self.Gmemory.add_node(state,attributes=self.StateAttributesDict[state])
                     self.Gmemory.add_node(state_,attributes=self.StateAttributesDict[state_])
-            self.Gmemory.add_edge(state,state_,weight=w,labels=action,visits=1)
+            self.Gmemory.add_edge(state,state_,weight=w,labels=action,reward=w,visits=1)
 
     def plotGmemory(self):
         #print('节点向量的长度',len(self.node_vec))
@@ -158,10 +160,45 @@ class GMRAgent:
         dataset=[]
         for node in list(self.Gmemory.nodes()):
             dataset.append(self.Gmemory.nodes[node]['attributes'])
-        print("dataset",dataset)
+        #print("dataset",dataset)
         gc = Cluster(dataset)
         gc.setThreshold(t1,t2)
         canopies = gc.clustering()
-        print('Get %s initial centers.' % len(canopies))
+        #print('Get %s initial centers.' % len(canopies))
+        center_list=[]
         for i in range(len(canopies)):
-            print(canopies[i])
+            center_list.append(str(list(canopies[i][0])))
+        
+        #print("center list ",center_list)
+
+   
+        for i in range(len(center_list)):
+            # if center_list[i] in dataset:
+            #     pass
+            # else:
+            #     print("where is the center i",center_list[i])
+            for j in range(len(center_list)):
+                if i==j:
+                    pass
+                else:
+                    # if center_list[j] in dataset:
+                    #     pass
+                    # else:
+                    #     print("where is the center j",center_list[j])
+                    if nx.algorithms.shortest_paths.generic.has_path(self.Gmemory,center_list[i],center_list[j]):
+                        print("reconstruct")
+                        path = nx.shortest_path(self.Gmemory,center_list[i],center_list[j])
+                        # print("path",path)
+                        temp=[]
+                        for idx in range(len(path)-1):
+                            pair_start = path[idx]
+                            pair_end = path[idx+1]
+                            temp.append([pair_start,self.Gmemory.edges[pair_start,pair_end]['labels'],self.Gmemory.edges[pair_start,pair_end]['reward'],pair_end])
+                        # print("temp",temp)
+                        self.MemoryWriter(temp)
+                    else:
+                        print("no path")
+        
+
+       
+        

@@ -41,7 +41,7 @@ class Canopy:
         else:
             canopies = [] # 用于存放最终归类的结果
             while len(self.dataset) != 0:
-                print("len(self.dataset)",len(self.dataset))
+                #print("len(self.dataset)",len(self.dataset))
                 # 获取一个随机下标
                 rand_index = self.getRandIndex() 
                 # 随机获取一个中心点，定为P点
@@ -56,7 +56,7 @@ class Canopy:
                     datum = self.dataset[datum_j]
                     # 计算选取的中心点P到每个点之间的距离
                     distance = self.euclideanDistance(current_center, datum)
-                    print(distance)
+                    #print(distance)
                     if distance < self.t1:
                         # 若距离小于t1，则将点归入P点的canopy类
                         current_center_list.append(datum)
@@ -110,7 +110,7 @@ def showCanopy(canopies, dataset, t1, t2):
     
 def main():
     t1 = 0.6
-    t2 = 0.4
+    t2 = 0.5
     gc =Canopy(dataset)
     gc.setThreshold(t1, t2)
     canopies = gc.clustering()
