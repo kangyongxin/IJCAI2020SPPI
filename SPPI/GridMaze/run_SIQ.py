@@ -37,7 +37,6 @@ def generate_trjs(M_trjs,N_steps,RL,env):
 
 def train(N,RL,env):
     """
-
     :param N: 每次训练的步数
     :return:
     """

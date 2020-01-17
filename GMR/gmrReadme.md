@@ -215,3 +215,10 @@ canopy
 
 
 部署多次实验，求证均值
+
+暂时没有理论保证
+更合理的聚类方法（直接使用图中的聚类方法，既考虑节点属性也考虑链接关系，如果能把边的属性放进去就更好了）
+
+mainq.py tabular Qlearning
+mainGq.py Graph Qlearning
+mainGC.py Graph cluster Qlearning
