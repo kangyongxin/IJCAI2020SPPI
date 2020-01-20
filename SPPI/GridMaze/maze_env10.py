@@ -26,7 +26,7 @@ UNIT = 40   # pixels
 #MAZE_H = 10 # grid height
 #MAZE_W = 10  # grid width
 #N_HELL = 10
-SLEEPtime = 0.011
+SLEEPtime = 0.001
 
 class Maze(tk.Tk, object):
     def __init__(self,maze_size,num_hell):
@@ -60,7 +60,7 @@ class Maze(tk.Tk, object):
         # hell
         self.hell_list =[]
         for i in range(self.N_HELL):
-            random.seed(i+0.758)
+            random.seed(i+0.29)
             p = random.randint(0,self.MAZE_H)
             q = random.randint(0,self.MAZE_H)
             if p==0 and  q==0:
