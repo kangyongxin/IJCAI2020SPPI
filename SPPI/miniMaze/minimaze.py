@@ -105,11 +105,11 @@ class Maze(tk.Tk, object):
             fill='black')
 
         # create oval
-        oval_center = origin + UNIT *5
-        self.oval = self.canvas.create_oval(
-            oval_center[0] - 15, oval_center[1] - 15,
-            oval_center[0] + 15, oval_center[1] + 15,
-            fill='yellow')
+        # oval_center = origin + UNIT *5
+        # self.oval = self.canvas.create_oval(
+        #     oval_center[0] - 15, oval_center[1] - 15,
+        #     oval_center[0] + 15, oval_center[1] + 15,
+        #     fill='yellow')
 
         # create red rect
         self.rect = self.canvas.create_rectangle(
@@ -167,11 +167,12 @@ class Maze(tk.Tk, object):
         s_ = self.canvas.coords(self.rect)  # next state
 
         # reward function
-        if s_ == self.canvas.coords(self.oval):
-            reward = 1
-            done = True
-            s_ = 'terminal'
-        elif s_ in [self.canvas.coords(self.hell1), self.canvas.coords(self.hell2),self.canvas.coords(self.hell3),self.canvas.coords(self.hell4),self.canvas.coords(self.hell5), self.canvas.coords(self.hell6), self.canvas.coords(self.hell7), self.canvas.coords(self.hell8)]:
+        # if s_ == self.canvas.coords(self.oval):
+        #     reward = 1
+        #     done = True
+        #     s_ = 'terminal'
+        # el
+        if s_ in [self.canvas.coords(self.hell1), self.canvas.coords(self.hell2),self.canvas.coords(self.hell3),self.canvas.coords(self.hell4),self.canvas.coords(self.hell5), self.canvas.coords(self.hell6), self.canvas.coords(self.hell7), self.canvas.coords(self.hell8)]:
             # reward = 0
             # done = True
             # s_ = s
