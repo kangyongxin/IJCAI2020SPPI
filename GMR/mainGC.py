@@ -35,7 +35,7 @@ def main(argv=()):
     #humanplayer_scrolly(game)
     env=Maze()
     agent= GMRAgent(actions=list(range(env.n_actions)))
-    n_trj = 5000
+    n_trj = 5
     reward_list=[]
     step_r=[]
     for eps in range(n_trj):
@@ -97,4 +97,5 @@ def main(argv=()):
     # plt.show()
 
 if __name__ == '__main__':
-  main(sys.argv)
+    print("first come here")
+    main(sys.argv)

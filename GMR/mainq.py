@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 
 def main_MAZE(env):
-    n_trj = 1000
+    n_trj = 10
     RL = QLearningTable(actions=list(range(env.n_actions)))
     reward_list=[]
     step_r=[]

@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 # 随机生成一个500个二维 [0,1)平面点
 dataset = np.random.rand(500, 2)
-print(dataset)
+#print(dataset)
 
 # 设计一个Canopy类
 class Canopy:

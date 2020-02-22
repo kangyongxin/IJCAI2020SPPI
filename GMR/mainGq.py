@@ -34,7 +34,7 @@ def main(argv=()):
     #humanplayer_scrolly(game)
     env=Maze()
     agent= GMRAgent(actions=list(range(env.n_actions)))
-    n_trj = 2000
+    n_trj = 20
     reward_list=[]
     step_r=[]
     for eps in range(n_trj):
