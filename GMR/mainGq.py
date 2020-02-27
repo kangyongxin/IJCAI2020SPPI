@@ -69,9 +69,9 @@ def main(argv=()):
     plt.figure(1)
     plt.plot(reward_list)
     #plt.show()
-    plt.savefig("./RESULT/GQ/reward_list003.png")
+    plt.savefig("./RESULT/GQ/reward_list002.png")
     reward_list=np.array(reward_list)
-    np.save('./RESULT/GQ/reward_list003.npy',reward_list)
+    np.save('./RESULT/GQ/reward_list002.npy',reward_list)
 
     temp_step_r=[]
     for i in range(len(step_r)):
@@ -83,9 +83,9 @@ def main(argv=()):
     plt.figure(2)
     plt.plot(temp_step_r)
     #plt.show()
-    plt.savefig("./RESULT/GQ/step_r003.png")
+    plt.savefig("./RESULT/GQ/step_r002.png")
     temp_step_r=np.array(temp_step_r)
-    np.save('./RESULT/GQ/temp_step_r003.npy',temp_step_r)
+    np.save('./RESULT/GQ/temp_step_r002.npy',temp_step_r)
 
 if __name__ == '__main__':
   main(sys.argv)
