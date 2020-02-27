@@ -181,15 +181,15 @@ class Maze(tk.Tk, object):
             done = True
             s_ = 'terminal'
         elif s_ in self.hell_list:#[self.canvas.coords(self.hell1), self.canvas.coords(self.hell2),self.canvas.coords(self.hell3),self.canvas.coords(self.hell4),self.canvas.coords(self.hell5), self.canvas.coords(self.hell6)]:
-            reward = -1
-            done = True
+            # reward = -1
+            # done = True
             # # s_ = s#'terminal'
             # # # done = False
             # # # s_=temp
-            # reward = -0.01
-            # done = False
-            # self.sit(action)
-            # s_ = s
+            reward =-1
+            done = False
+            self.sit(action)
+            s_ = s
 
 
         else:

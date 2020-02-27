@@ -3,9 +3,10 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 from Canopy import Canopy as Cluster
-
+#
+#learning_rate=0.01, reward_decay=0.9, e_greedy=0.97
 class GMRAgent:
-    def __init__(self, actions,e_greedy=0.95,gamma=0.9,lr=0.01):
+    def __init__(self, actions,e_greedy=0.97,gamma=0.9,lr=0.01):
         self.actions=actions
         #print(actions)
         self.epsilon=e_greedy

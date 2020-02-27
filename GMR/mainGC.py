@@ -20,14 +20,14 @@ from __future__ import print_function
 import sys
 import curses
 
-
+from maze.maze_env20 import Maze
 #from maze.maze_env5 import Maze
-from maze.maze_env25 import Maze
+#from maze.maze_env25 import Maze
 #from maze.maze3_env20 import Maze
 
 from GMRAgent import GMRAgent
 import matplotlib.pyplot as plt
-
+import numpy as np 
 
 def main(argv=()):
     print("hello world")
@@ -35,7 +35,7 @@ def main(argv=()):
     #humanplayer_scrolly(game)
     env=Maze()
     agent= GMRAgent(actions=list(range(env.n_actions)))
-    n_trj = 5
+    n_trj = 100
     reward_list=[]
     step_r=[]
     for eps in range(n_trj):
@@ -67,18 +67,26 @@ def main(argv=()):
         t2=100
         agent.MemoryReconstruction(t1,t2)
 
-    agent.plotGmemory()
+    #agent.plotGmemory()
+    plt.figure(1)
     plt.plot(reward_list)
-    plt.show()
-
+    #plt.show()
+    plt.savefig("./RESULT/GCQ/reward_list003.png")
+    reward_list=np.array(reward_list)
+    np.save('./RESULT/GCQ/reward_list003.npy',reward_list)
     temp_step_r=[]
     for i in range(len(step_r)):
-        if i<200 :
+        if i<500 :
             temp_step_r.append(step_r[i])
         else:
-            temp_step_r.append(sum(step_r[(i-190):i])/190)
+            temp_step_r.append(sum(step_r[(i-490):i])/490)
+    #print("temp_step_r",temp_step_r)
+    plt.figure(2)
     plt.plot(temp_step_r)
-    plt.show()
+    #plt.show()
+    plt.savefig("./RESULT/GCQ/step_r003.png")
+    temp_step_r=np.array(temp_step_r)
+    np.save('./RESULT/GCQ/temp_step_r003.npy',temp_step_r)
     
 
     

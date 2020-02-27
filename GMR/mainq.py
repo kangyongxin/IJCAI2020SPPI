@@ -9,10 +9,11 @@ from maze.maze_env20 import Maze
 #from maze.maze3_env5 import Maze
 from RL_brain_QLearning import QLearningTable
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def main_MAZE(env):
-    n_trj = 10
+    n_trj = 100
     RL = QLearningTable(actions=list(range(env.n_actions)))
     reward_list=[]
     step_r=[]
@@ -20,9 +21,9 @@ def main_MAZE(env):
         observation = env.reset()
         step = 0
         r_episode=0
-        while step<50:
+        while step<200:
             step +=1
-            env.render()
+            #env.render()
             #action = RL.random_action(str(observation))
             action = RL.choose_action(str(observation))
             observation_, reward, done = env.step(action)
@@ -32,20 +33,30 @@ def main_MAZE(env):
             observation = observation_
             if done:
                 print("done!")
+                #episode_rewards.append(0.0)
                 break
         
         reward_list.append(r_episode)
+    plt.figure(1)
     plt.plot(reward_list)
-    plt.show()
+    #plt.show()  
+    plt.savefig("./RESULT/Q/reward_list003.png")
+    reward_list=np.array(reward_list)
+    np.save('./RESULT/Q/reward_list003.npy',reward_list)
+
     temp_step_r=[]
     for i in range(len(step_r)):
-        if i<200 :
+        if i<500 :
             temp_step_r.append(step_r[i])
         else:
-            temp_step_r.append(sum(step_r[(i-190):i])/190)
+            temp_step_r.append(sum(step_r[(i-490):i])/490)
+    #print("temp_step_r",temp_step_r)
+    plt.figure(2)
     plt.plot(temp_step_r)
-    plt.show()
-        
+    #plt.show()
+    plt.savefig("./RESULT/Q/step_r003.png")
+    temp_step_r=np.array(temp_step_r)
+    np.save('./RESULT/Q/temp_step_r003.npy',temp_step_r)
             
         
 

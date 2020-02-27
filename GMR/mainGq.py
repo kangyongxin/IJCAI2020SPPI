@@ -21,12 +21,12 @@ import sys
 import curses
 
 
-#from maze.maze_env20 import Maze
+from maze.maze_env20 import Maze
 # from maze.maze_env5 import Maze
-from maze.maze3_env5 import Maze
+#from maze.maze3_env5 import Maze
 from GMRAgent import GMRAgent
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 def main(argv=()):
     print("hello world")
@@ -34,7 +34,7 @@ def main(argv=()):
     #humanplayer_scrolly(game)
     env=Maze()
     agent= GMRAgent(actions=list(range(env.n_actions)))
-    n_trj = 20
+    n_trj = 100
     reward_list=[]
     step_r=[]
     for eps in range(n_trj):
@@ -42,9 +42,9 @@ def main(argv=()):
         step = 0
         re_vec = []
         r_episode =0
-        while step <50:
+        while step <200:
             step +=1
-            env.render()
+            #env.render()
             #action = agent.random_action(str(observation))
             state = agent.obs2state(observation)
             action = agent.ActAccordingToGM(state)
@@ -63,20 +63,29 @@ def main(argv=()):
         #agent.MemoryWriter(re_vec)
         reward_list.append(r_episode)
     
-    agent.plotGmemory()
-    print('state',state)
-    agent.MemoryReader(state)
+    # agent.plotGmemory()
+    # print('state',state)
+    # agent.MemoryReader(state)
+    plt.figure(1)
     plt.plot(reward_list)
-    plt.show()
+    #plt.show()
+    plt.savefig("./RESULT/GQ/reward_list003.png")
+    reward_list=np.array(reward_list)
+    np.save('./RESULT/GQ/reward_list003.npy',reward_list)
 
     temp_step_r=[]
     for i in range(len(step_r)):
-        if i<200 :
+        if i<500 :
             temp_step_r.append(step_r[i])
         else:
-            temp_step_r.append(sum(step_r[(i-190):i])/190)
+            temp_step_r.append(sum(step_r[(i-490):i])/490)
+    #print("temp_step_r",temp_step_r)
+    plt.figure(2)
     plt.plot(temp_step_r)
-    plt.show()
+    #plt.show()
+    plt.savefig("./RESULT/GQ/step_r003.png")
+    temp_step_r=np.array(temp_step_r)
+    np.save('./RESULT/GQ/temp_step_r003.npy',temp_step_r)
 
 if __name__ == '__main__':
   main(sys.argv)
