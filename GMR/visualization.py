@@ -97,4 +97,4 @@ x.set_ylabel('rewards')
 # # exp_dir = 'Plot/'
 # # if not os.path.exists(exp_dir):
 # #     os.makedirs(exp_dir, exist_ok=True)
-f.savefig('./RESULT/Q/Q.png', dpi=50)
+f.savefig('./RESULT/Q/Q.png', dpi=1000)
