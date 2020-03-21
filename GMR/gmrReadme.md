@@ -24,7 +24,7 @@ main2: 在实际任务中训练策略，训练过程中将记忆检索结果作�
 
 main1:
 
-1. 初始化智能体：
+1.初始化智能体：
     所在环境--已知动作，得到状态（先初始化一个确定环境，不确定环境中要引入概率图计算）
     随机策略--智能体能根据随机种子产生随机数
     空的记忆--初始化图的建立和修正函数
@@ -98,7 +98,7 @@ main2 基本模块及参考：
 参考deepmind 的pycolab
 tvt中包含的是一个三段式结构，第二段是纯干扰项
 尝试pycolab中的其它选项 cite from https://github.com/deepmind/pycolab
- python pycolab/examples/better_scrolly_maze.py 是个迷宫环境，有多处相似的迷宫结构，且不是静态环境
+python pycolab/examples/better_scrolly_maze.py 是个迷宫环境，有多处相似的迷宫结构，且不是静态环境
 
 在conda activate DeepmindResearch中运行示例：python pycolab/examples/scrolly_maze.py 
 
@@ -151,7 +151,7 @@ sorb中是先构建状态对儿，再构建图
 
 8. 训练策略
 
-9.效果评估 
+9. 效果评估 
 在基本可以完成之后尝试评估效果
 python mainGq.py
 首先和  Q使用同样的参数，看看能否得到相似的效果
@@ -224,4 +224,3 @@ mainGq.py Graph Qlearning
 mainGC.py Graph cluster Qlearning
 
 
-代码运行：

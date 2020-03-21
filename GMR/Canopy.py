@@ -105,7 +105,7 @@ def showCanopy(canopies, dataset, t1, t2):
     # plt.axis('scaled')
     
     
-    plt.savefig('Canopy.svg')
+    plt.savefig('Canopy.png')
     plt.show()
     
 def main():
